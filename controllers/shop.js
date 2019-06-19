@@ -28,6 +28,12 @@ const Product = require('../models/product')
       });
     }
 
+    exports.getOrders = (req, res, next)=>{
+      res.render('shop/orders',{
+        path:'/orders',
+        pageTitle: 'Orders'
+      });
+    }
 
     exports.getCheckout = (req, res, next)=>{
       res.render('shop/checkout',{
