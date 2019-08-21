@@ -1,19 +1,25 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
+//const Cart = require('../models/cart');
+const User = require('../models/user');
 
    exports.getProducts = (req,res,next)=> { 
-    Product.fetchAll(products=>{
+    Product.fetchAll()
+    .then(products=>{
       res.render('shop/product_list',{
         prod:products,
         pageTitle:'Shop',
         path:'/products'
     }); 
-      }
-    )}; 
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+    }; 
    
     exports.getProduct = (req, res, next) => {
       const prodId = req.params.productId;
-      Product.findById(prodId, product => {
+      Product.findById(prodId)
+      .then(product => {
         res.render('shop/product_detail', {
           product: product,
           pageTitle: product.title,
@@ -23,13 +29,17 @@ const Cart = require('../models/cart');
     };
 
     exports.getIndex = (req, res, next) =>{
-      Product.fetchAll(products=>{
+      Product.fetchAll()
+      .then(products=>{
         res.render('shop/index',{
-           prod: products,
+           prods: products,
            pageTitle:'shop',
-           path:'/',
+           path:'/'
         });
       })
+      .catch(err=>{
+        console.log(err);
+      });
     }
 
 
@@ -43,6 +53,7 @@ const Cart = require('../models/cart');
             );
             if (cartProductData) {
               cartProducts.push({ productData: product, qty: cartProductData.qty });
+              
             }
           }
           res.render('shop/cart', {
@@ -55,13 +66,19 @@ const Cart = require('../models/cart');
     };
     
 
-    exports.postCart = (req,res,next)=>{
-      const prodId =req.body.productId;
-     Product.findById(prodId, product =>{
-      Cart.addProduct(prodId,product.price);
-       
-     });
-      res.redirect('/cart');
+    exports.postCart = (req, res, next) => {
+      const prodId = req.body.productId;
+      Product.findById(prodId)
+        .then(product => {
+          return req.user.addToCart(product);
+        })
+        .then(result => {
+          console.log(result);
+          res.redirect('/cart');
+        })
+        .catch(err=>{
+          console.log(err);
+        });
     }
     
     exports.postCartDelete = (req,res,next)=>{
