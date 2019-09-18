@@ -1,0 +1,26 @@
+.login-form {
+    width: 20rem;
+    max-width: 90%;
+    margin: auto;
+    display: block;
+}
+
+.login-form label,
+.login-form textarea,
+.login-form input {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.25rem;
+}
+
+.login-form input,
+.login-form textarea {
+    border: 1px solid #a1a1a1;
+    font: inherit;
+    border-radius: 2px;
+}
+
+.login-form input:focus,
+.login-form textarea:focus {
+    outline-color: #00695c;
+}
