@@ -10,20 +10,15 @@
         <% if(errorMessage) { %>
             <div class="user-message user-message--error"><%= errorMessage %></div>
             <% } %>
-        <form class="login-form" action="/login" method="POST">
+        <form class="login-form" action="/new-pass" method="POST">
             <div class="form-control">
-                <label for="email">E-Mail</label>
-                <input type="email" name="email" id="email" value ="<%= prevInput.email %>">
-            </div>
-            <div class="form-control">
-                <label for="password">Password</label>
+                <label for="password">New Password</label>
                 <input type="password" name="password" id="password">
             </div>
+            <input name="userId" type="hidden" value="<%= userId %>">
+            <input name="passwordToken" type="passwordToken" value="<%= passwordToken %>">
             <input name="_csrf" type="hidden" value="<%= csrf %>">
-            <button class="btn" type="submit">Login</button>
-            <div class="centered">
-                <a href="/reset">Forgot Password</a>
-            </div>
+            <button class="btn" type="submit">update Password</button>
         </form>
     </main>
 <%- include('../includes/end.ejs') %>

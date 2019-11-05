@@ -8,8 +8,7 @@ const Order = require('../models/order');
       res.render('shop/product_list',{
         prod:products,
         pageTitle:'Shop',
-        path:'/products',
-         isAuthenticated:req.isLogedIn
+        path:'/products' 
     }); 
       })
       .catch(err=>{
@@ -24,8 +23,7 @@ const Order = require('../models/order');
         res.render('shop/product_detail', {
           product: product,
           pageTitle: product.title,
-          path: '/products',
-           isAuthenticated:req.isLogedIn
+          path: '/products'  
         });
       });
     };
@@ -36,15 +34,13 @@ const Order = require('../models/order');
         res.render('shop/index',{
            prods: products,
            pageTitle:'shop',
-           path:'/',
-            isAuthenticated:req.isLogedIn
+           path:'/'
         });
       })
       .catch(err=>{
         console.log(err);
       });
     }
-
 
     exports.getCart = (req, res, next) => {
       req.user
@@ -55,9 +51,9 @@ const Order = require('../models/order');
         res.render('shop/cart', {
           path: '/cart',
           pageTitle: 'Your Cart',
-          products: products,
-           isAuthenticated:req.isLogedIn
-        })
+          products: products
+          
+        });
       })
         .catch(err=>{
           console.log(err);
@@ -102,7 +98,7 @@ const Order = require('../models/order');
            });
            const order = new Order({
              user:{
-               name:req.user.name,
+               email:req.user.email,
                userId:req.user
              },
              products:products
@@ -126,8 +122,7 @@ const Order = require('../models/order');
               res.render('shop/orders', {
                 path: '/orders',
                 pageTitle: 'Your Orders',
-                orders: orders,
-                 isAuthenticated:req.isLogedIn
+                orders: orders    
               });
             })
             .catch(err => console.log(err));
@@ -136,8 +131,9 @@ const Order = require('../models/order');
     exports.getCheckout = (req, res, next)=>{
       res.render('shop/checkout',{
         path:'/checkout',
-        pageTitle:'Checkout Form',
-         isAuthenticated:req.isLogedIn
+        pageTitle:'Checkout Form'
+         
+     
       });
     }
   
